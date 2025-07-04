@@ -1,12 +1,13 @@
 import { useState, useEffect } from "react";
 import api from "../api";
 import Note from "../components/Note";
+import { useNavigate } from "react-router-dom";
 import "../styles/Home.css";
 export default function Home() {
     const [notes, setNotes] = useState([]);
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
-
+    const navigate = useNavigate();
     const getNote = () => {
         api
         .get("/api/notes/")
@@ -81,6 +82,14 @@ export default function Home() {
                     <button type="submit" value="Submit" className="create-note-button">Create Note</button>
                 </form>
             </div>
+            <button
+                className="logout-button"
+                onClick={() => {
+                    navigate("/logout")
+                }}
+            >
+                Logout
+            </button>
         </div>
     );
 }
