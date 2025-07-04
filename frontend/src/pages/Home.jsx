@@ -1,5 +1,7 @@
-import { useState, useEffect, use } from "react";
+import { useState, useEffect } from "react";
 import api from "../api";
+import Note from "../components/Note";
+import "../styles/Home.css";
 export default function Home() {
     const [notes, setNotes] = useState([]);
     const [title, setTitle] = useState("");
@@ -16,13 +18,11 @@ export default function Home() {
         .catch((error) => alert("An error occurred: " + error));
     };
     const deleteNote = (id) => {
-        api.delete(`/api/notes/${id}/`)
+        api.delete(`/api/notes/delete/${id}/`)
         .then((res) => {
             if (res.status === 204) {
                 console.log("Note deleted successfully");
-            }
-            else {
-                alert("An error occurred while deleting the note", res.status);
+                getNote()
             }
         }).catch((error) => {
             console.error("Error deleting note:", error);
@@ -35,6 +35,7 @@ export default function Home() {
         .then((res) => {
             if (res.status === 201) {
                 console.log("Note created successfully:", res.data);
+                getNote();
                 setTitle("");
                 setContent("");
             } else {
@@ -44,21 +45,28 @@ export default function Home() {
             console.error("Error creating note:", error);
             alert("An error occurred while creating the note: " + error);
         });
-        getNote();
+        
     }
     useEffect(() => {
         getNote();
     }, []);
     return (
-        <div>
-            <h1>Notes</h1>
+        <div className="home-container">
+            <br />
+            <section className="notes-container">
+            {notes.map((note) => (
+                <Note note={note} onDelete={deleteNote} key={note.id}/>
+            ))}
+            </section>
             <div>
-                <form onSubmit={createNote}>
+                <h1 className="main-title">Notes</h1>
+                <form onSubmit={createNote} className="note-form">
                     <input 
                         type="text" 
                         value={title} 
                         onChange={(e) => setTitle(e.target.value)} 
-                        placeholder="Title" 
+                        placeholder="Title"
+                        className="note-title-input"
                         required
                     />
                     <br />
@@ -66,10 +74,11 @@ export default function Home() {
                         value={content} 
                         onChange={(e) => setContent(e.target.value)} 
                         placeholder="Content" 
+                        className="note-content-input"
                         required
                     />
                     <br />
-                    <button type="submit" value="Submit">Create Note</button>
+                    <button type="submit" value="Submit" className="create-note-button">Create Note</button>
                 </form>
             </div>
         </div>
