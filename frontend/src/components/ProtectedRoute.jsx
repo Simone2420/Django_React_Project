@@ -31,9 +31,12 @@ function ProtectedRoute({children}) {
         const token = localStorage.getItem(ACCESS_TOKEN)
         if (!token){
             setIsAuthorized(false)
+            console.log("No token found")
             return 
             
         }
+        console.log("Token found")
+        // Decode the token to check expiration
         const decoded = jwtDecode(token)
         const tokenExpiration = decoded.exp
         const now = Date.now() / 1000
@@ -41,6 +44,7 @@ function ProtectedRoute({children}) {
             await refreshToken()
         }
         else{
+            console.log("Token is still valid, setting authorized to true")
             setIsAuthorized(true)
         }
     }
@@ -48,6 +52,6 @@ function ProtectedRoute({children}) {
     if (isAuthorized === null){
         return <div>Loading...</div>
     }
-    return isAuthorized ? children : <Navigate to="login"/>
+    return isAuthorized ? children : <Navigate to="/login"/>
 }
 export default ProtectedRoute
