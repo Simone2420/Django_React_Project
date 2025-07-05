@@ -8,3 +8,12 @@ wheels/
 
 # Virtual environments
 .venv
+*.env
+*.db
+# Django specific
+*.log
+*.pot
+*.pyc
+*.pyo
+*.sqlite3
+*.db
