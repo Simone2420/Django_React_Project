@@ -3,9 +3,10 @@ version: "1.0.0"
 endpoints:
     - name: rest-api-be2
       displayName: REST API
+      port: 8000
+      context: /
       service:
         basePath: /
-        port: 8000
       type: REST
       networkVisibilities:
         - Project
