@@ -1,7 +1,6 @@
 import axios from "axios"
 import { ACCESS_TOKEN, REFRESH_TOKEN } from "./constants"
-
-const apiUrl = "/choreo-apis/notes-app/backend/v1"
+const apiUrl = window?.configs?.apiUrl ? window.configs.apiUrl : "/";
 const api = axios.create({
   baseURL: import.meta.env.VITE_API_URL ? import.meta.env.VITE_API_URL : apiUrl
   
