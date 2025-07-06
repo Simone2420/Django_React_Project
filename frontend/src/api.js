@@ -1,7 +1,7 @@
 import axios from "axios"
 import { ACCESS_TOKEN, REFRESH_TOKEN } from "./constants"
 
-apiUrl = "https://note-app-backend-r6bq.onrender.com"
+const apiUrl = "https://note-app-backend-r6bq.onrender.com"
 const api = axios.create({
   baseURL: import.meta.env.VITE_API_URL ? import.meta.env.VITE_API_URL : apiUrl
   
