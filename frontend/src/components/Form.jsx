@@ -12,11 +12,7 @@ export default function Form(props) {
     const handleSubmit = async (e) => {
         setLoading(true)
         e.preventDefault()
-        console.log(route)
-        console.log(method)
-        console.log("antes de api.post")
         try {
-            console.log("dentro de api.post")
             const response = await api.post(route, { username, password })
             console.log("después de api.post")
             console.log("Response data:", response.data)
@@ -43,7 +39,8 @@ export default function Form(props) {
 
     }
     return (
-        <form onSubmit={handleSubmit} className='form-contaniner'>
+        <div className='form-contaniner'>
+        <form onSubmit={handleSubmit}>
             <h1>{method === "Login" ? "Login" : "Register"}</h1>
             <input 
             className='form-input' 
@@ -68,5 +65,10 @@ export default function Form(props) {
                 {method === "Login" ? "Login" : "Register"}
             </button>
         </form>
+        {method === "Login" ? <button className='to-register-button' onClick={() =>{
+            navigate("/register")
+        }}>Go to Register</button> : <button className='to-register-button' onClick={() => {
+            navigate("/login")}}>Go to Login</button>};
+        </div>
     )
 }
